@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DebuggerCore", "DebuggerCor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DebuggerCore.Test", "DebuggerCore.Test\DebuggerCore.Test.vcxproj", "{290ABC4D-CC32-4E1D-B494-EE1CBF53F62A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DebuggerApps", "DebuggerApps", "{1672D9B4-1BA1-4EEC-80F8-BC0D71E9C3F4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleExceptionMaker", "SimpleExceptionMaker\SimpleExceptionMaker.vcxproj", "{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,9 +35,20 @@ Global
 		{290ABC4D-CC32-4E1D-B494-EE1CBF53F62A}.Release|x64.Build.0 = Release|x64
 		{290ABC4D-CC32-4E1D-B494-EE1CBF53F62A}.Release|x86.ActiveCfg = Release|Win32
 		{290ABC4D-CC32-4E1D-B494-EE1CBF53F62A}.Release|x86.Build.0 = Release|Win32
+		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Debug|x64.ActiveCfg = Debug|x64
+		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Debug|x64.Build.0 = Debug|x64
+		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Debug|x86.ActiveCfg = Debug|Win32
+		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Debug|x86.Build.0 = Debug|Win32
+		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Release|x64.ActiveCfg = Release|x64
+		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Release|x64.Build.0 = Release|x64
+		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Release|x86.ActiveCfg = Release|Win32
+		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8} = {1672D9B4-1BA1-4EEC-80F8-BC0D71E9C3F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9F5FF433-1A01-4D9D-872C-96E67BDBDD52}
