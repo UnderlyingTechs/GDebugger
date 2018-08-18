@@ -1,11 +1,11 @@
 #include "DebuggerService.h"
 
-DWORD DebuggerService::Attach(HANDLE, DebuggerProcess*)
+DWORD DebuggerService::AttachProcess(HANDLE processId, DebuggerProcess** ppDebuggerProcess)
 {
 	return 0;
 }
 
-DWORD DebuggerService::Debug(TCHAR*, DebuggerProcess*)
+DWORD DebuggerService::DebugProcess(TCHAR* processFileName, DebuggerProcess** ppDebuggerProcess) 
 {
 	return 0;
 }
@@ -14,5 +14,17 @@ void DebuggerService::Initialzie()
 {
 	
 }
+
+DebuggerService::DebuggerService()
+{
+	
+}
+
+DebuggerService::DebuggerService(TCHAR*)
+{
+	
+}
+
+
 
 

@@ -11,6 +11,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DebuggerApps", "DebuggerApp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleExceptionMaker", "SimpleExceptionMaker\SimpleExceptionMaker.vcxproj", "{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ndbg", "ndbg\ndbg.vcxproj", "{45096B83-7302-4162-99E3-F9FFF9504A1D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DebuggerCommand", "DebuggerCommand\DebuggerCommand.vcxproj", "{892772DE-3492-467C-AEB7-E98EC17D9846}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DebuggerCommand.Test", "DebuggerCommand.Test\DebuggerCommand.Test.vcxproj", "{9EA2C5EC-741A-4781-9192-CE85B6B7F8B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -43,6 +49,30 @@ Global
 		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Release|x64.Build.0 = Release|x64
 		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Release|x86.ActiveCfg = Release|Win32
 		{BD7C53BB-FF21-4142-9A9E-FA33730C69A8}.Release|x86.Build.0 = Release|Win32
+		{45096B83-7302-4162-99E3-F9FFF9504A1D}.Debug|x64.ActiveCfg = Debug|x64
+		{45096B83-7302-4162-99E3-F9FFF9504A1D}.Debug|x64.Build.0 = Debug|x64
+		{45096B83-7302-4162-99E3-F9FFF9504A1D}.Debug|x86.ActiveCfg = Debug|Win32
+		{45096B83-7302-4162-99E3-F9FFF9504A1D}.Debug|x86.Build.0 = Debug|Win32
+		{45096B83-7302-4162-99E3-F9FFF9504A1D}.Release|x64.ActiveCfg = Release|x64
+		{45096B83-7302-4162-99E3-F9FFF9504A1D}.Release|x64.Build.0 = Release|x64
+		{45096B83-7302-4162-99E3-F9FFF9504A1D}.Release|x86.ActiveCfg = Release|Win32
+		{45096B83-7302-4162-99E3-F9FFF9504A1D}.Release|x86.Build.0 = Release|Win32
+		{892772DE-3492-467C-AEB7-E98EC17D9846}.Debug|x64.ActiveCfg = Debug|x64
+		{892772DE-3492-467C-AEB7-E98EC17D9846}.Debug|x64.Build.0 = Debug|x64
+		{892772DE-3492-467C-AEB7-E98EC17D9846}.Debug|x86.ActiveCfg = Debug|Win32
+		{892772DE-3492-467C-AEB7-E98EC17D9846}.Debug|x86.Build.0 = Debug|Win32
+		{892772DE-3492-467C-AEB7-E98EC17D9846}.Release|x64.ActiveCfg = Release|x64
+		{892772DE-3492-467C-AEB7-E98EC17D9846}.Release|x64.Build.0 = Release|x64
+		{892772DE-3492-467C-AEB7-E98EC17D9846}.Release|x86.ActiveCfg = Release|Win32
+		{892772DE-3492-467C-AEB7-E98EC17D9846}.Release|x86.Build.0 = Release|Win32
+		{9EA2C5EC-741A-4781-9192-CE85B6B7F8B0}.Debug|x64.ActiveCfg = Debug|x64
+		{9EA2C5EC-741A-4781-9192-CE85B6B7F8B0}.Debug|x64.Build.0 = Debug|x64
+		{9EA2C5EC-741A-4781-9192-CE85B6B7F8B0}.Debug|x86.ActiveCfg = Debug|Win32
+		{9EA2C5EC-741A-4781-9192-CE85B6B7F8B0}.Debug|x86.Build.0 = Debug|Win32
+		{9EA2C5EC-741A-4781-9192-CE85B6B7F8B0}.Release|x64.ActiveCfg = Release|x64
+		{9EA2C5EC-741A-4781-9192-CE85B6B7F8B0}.Release|x64.Build.0 = Release|x64
+		{9EA2C5EC-741A-4781-9192-CE85B6B7F8B0}.Release|x86.ActiveCfg = Release|Win32
+		{9EA2C5EC-741A-4781-9192-CE85B6B7F8B0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

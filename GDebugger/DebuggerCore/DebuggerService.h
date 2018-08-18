@@ -33,11 +33,11 @@ public:
 	/*
 	 * 附加到一个已经存在的进程，如果成功则返回 对应的调试对象。
 	 */
-	DWORD Attach(HANDLE, DebuggerProcess*);
+	DWORD AttachProcess(HANDLE, DebuggerProcess**);
 
 	/*
 	 * 根据文件名启动一个新进程调试，如果成功则返回 对应进程的调试对象
 	 */
-	DWORD Debug(TCHAR*, DebuggerProcess*);
+	DWORD DebugProcess(TCHAR*, DebuggerProcess**);
 };
 

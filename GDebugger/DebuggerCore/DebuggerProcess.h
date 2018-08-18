@@ -1,6 +1,6 @@
 #pragma once
 
-extern class DebuggerService;
+class DebuggerService;
 
 enum ProcessDebugState
 {

@@ -15,21 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DebuggerService.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DebuggerProcess.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DebugUtil.h">
+    <ClInclude Include="LocalCommand.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DebuggerService.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugUtil.cpp">
+    <ClCompile Include="LocalCommand.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
