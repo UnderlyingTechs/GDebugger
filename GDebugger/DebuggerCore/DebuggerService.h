@@ -8,7 +8,7 @@
  * 核心的调试服务类，一个DebuggerService 代表一个调试服务，用户可以基于该服务启动
  * 调试进程，或者附加到一个已经存在的进程。
  */
-class DebuggerService
+class __declspec(dllexport) DebuggerService
 {
 public:
 
@@ -33,11 +33,11 @@ public:
 	/*
 	 * 附加到一个已经存在的进程，如果成功则返回 对应的调试对象。
 	 */
-	DWORD AttachProcess(HANDLE, DebuggerProcess**);
+	DWORD AttachProcess(HANDLE, DebuggerProcess*&);
 
 	/*
 	 * 根据文件名启动一个新进程调试，如果成功则返回 对应进程的调试对象
 	 */
-	DWORD DebugProcess(TCHAR*, DebuggerProcess**);
+	DWORD DebugProcess(TCHAR*, DebuggerProcess*&);
 };
 

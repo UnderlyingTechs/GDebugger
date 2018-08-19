@@ -20,7 +20,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LocalCommand.cpp">
+    <ClCompile Include="CommandService.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DifferenceNamesOwner.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -18,7 +18,8 @@ enum ProcessDebugState
 /*
 * 定义一个当前获取的调试进程
 */
-class DebuggerProcess
+
+class __declspec(dllexport) DebuggerProcess
 {
 public:
 

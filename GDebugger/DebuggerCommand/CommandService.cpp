@@ -10,7 +10,7 @@ CommandService::CommandService()
 CommandService::CommandService(const CommandService& service)
 {
 	this->pDebuggerService = service.GetDebuggerService();
-	this->pDebuggerProcess = service.GetDebuggerProcess();
+	this->pDebuggerProcess = service.GetDebuggerProcess(); 
 }
 
 CommandService* CommandService::instance = new CommandService();
@@ -46,14 +46,14 @@ class DebugCommand* CommandService::FindCommand(const std::string& commandName)
 }
 
 
-DebugCommand* CommandService::FindCommand(std::list<std::string*> names)
+DebugCommand* CommandService::FindCommand(std::list<std::string> names)
 {
 	auto nameInterator = names.begin();
 
 	while (nameInterator != names.end())
 	{
 		const auto name = *nameInterator++;
-		const auto pCommand = this->FindCommand(*name);
+		const auto pCommand = this->FindCommand(name);
 
 		if (nullptr != pCommand)
 		{
@@ -67,7 +67,7 @@ DebugCommand* CommandService::FindCommand(std::list<std::string*> names)
 
 void CommandService::RegisterDebugCommand(DebugCommand* pInputCommand)
 {
-	const auto pCommand = this->FindCommand(pInputCommand->GetCommandMetadata()->GetCommandNames());
+	const auto pCommand = this->FindCommand(pInputCommand->GetCommandMetadata()->GetNames());
 
 	if (pCommand != nullptr)
 	{
@@ -81,40 +81,17 @@ void CommandService::RegisterDebugCommand(DebugCommand* pInputCommand)
 	this->commands.push_back(pInputCommand);
 }
 
+ParsedCommand* CommandService::ParseCommand(String& content)
+{
+	return nullptr;
+}
+
+
 //
 //BOOL CommandMetadata::IsCommandNameMatch(TCHAR* name) const
 //{
 //	const auto commandName = std::string(name);
 //	return this->IsCommandNameMatch(commandName);
 //}
-
-BOOL CommandMetadata::IsCommandNameMatch(WCHAR* name) const
-{
-	std::string commandName;
-	WCHARToString(commandName, name);
-	return this->IsCommandNameMatch(commandName);
-}
-
-
-BOOL CommandMetadata::IsCommandNameMatch(const std::string& name) const
-{
-	auto nameIterator = this->names.begin();
-	while (nameIterator != this->names.end())
-	{
-		const auto currentName = *nameIterator++;
-		if (*currentName == name)
-		{
-			return TRUE;
-		}
-	}
-
-	return FALSE;
-}
-
-CommandParameterDescription::CommandParameterDescription(std::string parameterName, std::string parameterDescription)
-{
-	this->parameterName = parameterName;
-	this->parameterDescription = parameterDescription;
-}
 
 

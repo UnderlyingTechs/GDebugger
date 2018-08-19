@@ -5,9 +5,9 @@
 /**
  * ¿í×Ö·û´®×ª±ê×¼×Ö·û´®
  */
-void WCHARToString(std::string& dest, WCHAR* wstr);
+_declspec(dllexport) void WCHARToString(std::string& dest, WCHAR* wstr);
 
 /**
  * ×Ö·û´®×ª±ê×¼¿í×Ö·û´®
  */
-void StringToWstring(std::wstring& dest, std::string str);
+_declspec(dllexport) void StringToWstring(std::wstring& dest, std::string str);
