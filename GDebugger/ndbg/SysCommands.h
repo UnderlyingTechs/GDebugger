@@ -1,5 +1,5 @@
 #pragma once
-#include "LocalCommand.h"
+#include "../DebuggerCommand/LocalCommand.h"
 
 /*
  * 定义基本的命令类型

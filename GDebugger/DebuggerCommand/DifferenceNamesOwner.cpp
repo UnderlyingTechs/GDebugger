@@ -1,5 +1,5 @@
 #include "LocalCommand.h"
-#include "DebugUtil.h"
+#include "../DebuggerCore/DebugUtil.h"
 
 
 BOOL DifferenceNamesOwner::IsCommandNameMatch(WCHAR* name) const

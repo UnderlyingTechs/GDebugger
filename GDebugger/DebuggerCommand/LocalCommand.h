@@ -1,24 +1,27 @@
 #pragma once
 #include "../DebuggerCore/DebuggerService.h"
-#include <list>
+#include <string>
+#include <vector>
 
 using String = std::string;
-using Int32 = long;
+using Size = size_t;
 
 enum CommandTokenType
 {
+	Unknow,
 	Identifier,
 	ParameterName,
-	StringValue
+	StringValue,
+	End
 };
 
 struct CommandToken
 {
-	Int32			 Row;
-	Int32			 Col;
-
+	Size			 Row;
+	Size			 Col;
+	BOOL			 IsTokenEated;
 	CommandTokenType TokenType;
-	String*			 TokenValue;
+	String*			 pTokenValue;
 };
 
 /**
@@ -31,30 +34,30 @@ public:
 	/**
 	 * 获取错误在的文本列
 	 */
-	Int32 GetColumn() const { return this->column; }
+	Size GetColumn() const { return this->column; }
 
 	/**
 	 * 获取错误所在的文本行
 	 */
-	Int32 GetRow() const { return this->row; }
+	Size GetRow() const { return this->row; }
 
 	/**
 	 * 获取错误信息
 	 */
-	String* GetError() const { return this->error; }
+	String* GetError() const { return this->pError; }
 
-	ErrorInfo(Int32 row, Int32 col, String* error)
+	ErrorInfo(Size row, Size col, String* error)
 	{
 		this->row = row;
 		this->column = col;
-		this->error = error;
+		this->pError = error;
 	}
 
 	~ErrorInfo();
 private:
-	Int32 column = 0;
-	Int32 row = 0;
-	String* error = nullptr;
+	Size column = 0;
+	Size row = 0;
+	String* pError = nullptr;
 };
 
 /**
@@ -86,7 +89,7 @@ public:
 	/**
 	 * 获取当前参数解析完成的所有值
 	 */
-	std::list<String*> GetValues() const
+	std::vector<String*> GetValues() const
 	{
 		return this->values;
 	}
@@ -101,7 +104,7 @@ public:
 
 private:
 	String* name = nullptr;
-	std::list<String*> values;
+	std::vector<String*> values;
 };
 
 /**
@@ -130,7 +133,7 @@ public:
 	/**
 	 * 获取命令对应的参数列表
 	 */
-	std::list<ParsedParameter*> GetParameters() const
+	std::vector<ParsedParameter*> GetParameters() const
 	{
 		return this->parameters;
 	}
@@ -151,10 +154,16 @@ public:
 		this->errors.push_back(pErrorInfo);
 	}
 
+	void AddError(Size row, Size col, std::string* pError)
+	{
+		const auto pErrorInfo = new ErrorInfo(row, col, pError);
+		this->AddError(pErrorInfo);
+	}
+
 	/**
 	 * 获取当前命令的所有错误信息列表
 	 */
-	std::list<ErrorInfo*> GetErrors() const
+	std::vector<ErrorInfo*> GetErrors() const
 	{
 		return this->errors;
 	}
@@ -168,9 +177,21 @@ public:
 	}
 private:
 	String* pName = nullptr;
-	std::list<ParsedParameter*> parameters;
-	std::list<ErrorInfo*> errors;
+	std::vector<ParsedParameter*> parameters;
+	std::vector<ErrorInfo*> errors;
 };
+
+
+struct ParseContext
+{
+	std::string*   pText;
+	Size           Row;
+	Size		   Col;
+	Size		   Pos;
+	ParsedCommand* pCommand;
+	CommandToken*  pToken;
+};
+
 
 /**
  * 定义一个抽象对象基类，该抽象对象可以具有多个不同名称的名字，并且可以设置是否支持大小写
@@ -198,7 +219,7 @@ public:
 	/**
 	* 获取当前对象支持的所有形式的名称
 	*/
-	std::list<String> GetNames() const
+	std::vector<String> GetNames() const
 	{
 		return this->names;
 	}
@@ -212,7 +233,7 @@ public:
 		this->names.push_back(name);
 	}
 private:
-	std::list<String> names;
+	std::vector<String> names;
 };
 
 /**
@@ -244,7 +265,7 @@ public:
     /**
      * 获取当前命令支持的参数集合
      */
-	std::list<ParameterDescription*> GetParameterDescriptions() const
+	std::vector<ParameterDescription*> GetParameterDescriptions() const
 	{
 		return this->parameters;
 	};
@@ -257,8 +278,9 @@ public:
 		this->parameters.push_back(parameter);
 	};
 
+	~CommandMetadata();
 private:
-	std::list<ParameterDescription*> parameters;
+	std::vector<ParameterDescription*> parameters;
 
 };
 
@@ -339,7 +361,7 @@ public :
 	/**
 	 * 根据一个字符串集合查找命令，只要满足其中任何一个名称，即返回当前找到的命令对象指针
 	 */
-	DebugCommand* FindCommand(std::list<String> names);
+	DebugCommand* FindCommand(std::vector<String> names);
 
 	
 
@@ -351,7 +373,7 @@ public :
 	/**
 	 * 返回当前命令服务的所有支持命令，所有的命令对象不允许修改
 	 */
-	std::list<DebugCommand*> GetCommands() const
+	std::vector<DebugCommand*> GetCommands() const
 	{
 		return this->commands;
 	}
@@ -367,12 +389,20 @@ private:
 
 	CommandService(const CommandService&);
 
-	static CommandToken* ReadNextToken(const String& content, Int32* pNextReadPosition);
+	static BOOL ReadNextToken(ParseContext* pContext);
 
-	static ParsedParameter* ParseCommandParameter(const String& content, Int32* pNextReadPosition);
+	static ParsedParameter* ParseCommandParameter(ParseContext* pContext);
+
+	static BOOL ReadIdentifierToken(ParseContext* pContext);
+
+	static BOOL ReadParameterNameToken(ParseContext* pContext);
+
+	static BOOL ReadStringToken(ParseContext* pContext);
+
+	static BOOL IsWhitespaceChar(char ch);
 
 	static CommandService*   instance;
 	DebuggerService*         pDebuggerService;
 	DebuggerProcess*         pDebuggerProcess;
-	std::list<DebugCommand*> commands;
+	std::vector<DebugCommand*> commands;
 };

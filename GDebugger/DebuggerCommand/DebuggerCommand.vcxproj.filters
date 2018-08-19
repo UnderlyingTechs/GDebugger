@@ -26,5 +26,14 @@
     <ClCompile Include="DifferenceNamesOwner.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CommandMetadata.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParsedParameter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

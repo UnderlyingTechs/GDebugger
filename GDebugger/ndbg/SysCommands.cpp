@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SysCommands.h"
 #include <iostream>
+#include "../DebuggerCommand/LocalCommand.h"
 
 void DebugProcessCommand::RunCommand()
 {
