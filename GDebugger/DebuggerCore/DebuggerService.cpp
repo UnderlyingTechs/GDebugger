@@ -5,7 +5,7 @@ DWORD DebuggerService::AttachProcess(HANDLE processId, DebuggerProcess*& ppDebug
 	return 0;
 }
 
-DWORD DebuggerService::DebugProcess(TCHAR* processFileName, DebuggerProcess*& ppDebuggerProcess) 
+DWORD DebuggerService::DebugProcess(const WCHAR* processFileName, DebuggerProcess*& ppDebuggerProcess)
 {
 	return 0;
 }
@@ -16,9 +16,7 @@ void DebuggerService::Initialzie()
 }
 
 DebuggerService::DebuggerService()
-{
-	
-}
+= default;
 
 DebuggerService::DebuggerService(TCHAR*)
 {

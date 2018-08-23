@@ -64,3 +64,10 @@ void StringToWstring(std::wstring& dest, std::string str)
 	//}
 }
 
+void StringToWString(std::string& str, std::wstring& dest)
+{	
+	
+	std::wstring wstr(str.length(), L' ');
+	std::copy(str.begin(), str.end(), wstr.begin());
+	dest = wstr;
+}

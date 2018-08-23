@@ -14,8 +14,8 @@ ParsedParameter::~ParsedParameter()
 	}
 
 	auto parameters = this->GetValues();
-	auto parameterIterator = parameters.begin();
-	while (parameterIterator != parameters.end())
+	auto parameterIterator = parameters->begin();
+	while (parameterIterator != parameters->end())
 	{
 		const auto parameter = *parameterIterator++;
 		delete parameter;

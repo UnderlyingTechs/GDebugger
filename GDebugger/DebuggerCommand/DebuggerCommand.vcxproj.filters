@@ -35,5 +35,11 @@
     <ClCompile Include="ErrorInfo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DebugCommand.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParsedCommand.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

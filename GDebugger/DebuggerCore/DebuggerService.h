@@ -38,6 +38,6 @@ public:
 	/*
 	 * 根据文件名启动一个新进程调试，如果成功则返回 对应进程的调试对象
 	 */
-	DWORD DebugProcess(TCHAR*, DebuggerProcess*&);
+	DWORD DebugProcess(const WCHAR*, DebuggerProcess*&);
 };
 

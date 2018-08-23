@@ -51,14 +51,14 @@ class DebugCommand* CommandService::FindCommand(const std::string& commandName)
 }
 
 
-DebugCommand* CommandService::FindCommand(std::vector<std::string> names)
+DebugCommand* CommandService::FindCommand(std::vector<std::string const*> names)
 {
 	auto nameInterator = names.begin();
 
 	while (nameInterator != names.end())
 	{
 		const auto name = *nameInterator++;
-		const auto pCommand = this->FindCommand(name);
+		const auto pCommand = this->FindCommand(*name);
 
 		if (nullptr != pCommand)
 		{

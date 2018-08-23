@@ -5,6 +5,8 @@
 
 using String = std::string;
 using Size = size_t;
+using StringList = std::vector<String*>*;
+using ConstStringList = std::vector<const String*>;
 
 enum CommandTokenType
 {
@@ -60,6 +62,8 @@ private:
 	String* pError = nullptr;
 };
 
+using ErrorInfoList = std::vector<ErrorInfo*>;
+
 /**
  * 代表一个字符串解析的参数对象
  */
@@ -89,7 +93,7 @@ public:
 	/**
 	 * 获取当前参数解析完成的所有值
 	 */
-	std::vector<String*> GetValues() const
+	StringList GetValues() const
 	{
 		return this->values;
 	}
@@ -97,15 +101,17 @@ public:
 	/**
 	 * 添加一个解析成功的参数值，注意该接口只在构造参数对象，解析命令时调用
 	 */
-	void AddValue(String* const value)
+	void AddValue(String* const value) const
 	{
-		this->values.push_back(value);
+		this->values->push_back(value);
 	}
 
 private:
-	String* name = nullptr;
-	std::vector<String*> values;
+	String*    name = nullptr;
+	StringList values{};
 };
+
+using ParsedParameterList = std::vector<ParsedParameter*>;
 
 /**
  * 通过字符串解析出的一个命令实例
@@ -133,7 +139,7 @@ public:
 	/**
 	 * 获取命令对应的参数列表
 	 */
-	std::vector<ParsedParameter*> GetParameters() const
+	ParsedParameterList GetParameters() const
 	{
 		return this->parameters;
 	}
@@ -154,7 +160,7 @@ public:
 		this->errors.push_back(pErrorInfo);
 	}
 
-	void AddError(Size row, Size col, std::string* pError)
+	void AddError(Size row, Size col, String* pError)
 	{
 		const auto pErrorInfo = new ErrorInfo(row, col, pError);
 		this->AddError(pErrorInfo);
@@ -163,7 +169,7 @@ public:
 	/**
 	 * 获取当前命令的所有错误信息列表
 	 */
-	std::vector<ErrorInfo*> GetErrors() const
+	ErrorInfoList GetErrors() const
 	{
 		return this->errors;
 	}
@@ -175,16 +181,35 @@ public:
 	{
 		return !this->errors.empty();
 	}
+
+	/**
+	 * 根据名称与指定位置检索参数值
+	 */
+	String* FindParameterValue(const String& name, Size index = 0) const;
+
+	/**
+	 * 根据指定名称检索参数值集合
+	 */
+	StringList FindParameterValues(const String& name) const;
+
 private:
-	String* pName = nullptr;
-	std::vector<ParsedParameter*> parameters;
-	std::vector<ErrorInfo*> errors;
+	String*             pName = nullptr;
+	ParsedParameterList parameters;
+	ErrorInfoList       errors;
 };
 
+/**
+ * 运行时命令上下文
+ */
+struct RunningContext
+{
+	ParsedCommand*		pCommandInfo;
+
+};
 
 struct ParseContext
 {
-	std::string*   pText;
+	String*        pText;
 	Size           Row;
 	Size		   Col;
 	Size		   Pos;
@@ -219,7 +244,7 @@ public:
 	/**
 	* 获取当前对象支持的所有形式的名称
 	*/
-	std::vector<String> GetNames() const
+	ConstStringList GetNames() const
 	{
 		return this->names;
 	}
@@ -227,13 +252,13 @@ public:
 	/**
 	* 添加一个命令名称
 	*/
-	void AddName(const String name)
+	void AddName(const String* name)
 	{
 		// TODO: 检查命令名称不允许相同
 		this->names.push_back(name);
 	}
 private:
-	std::vector<String> names;
+	ConstStringList names;
 };
 
 /**
@@ -242,18 +267,31 @@ private:
 class __declspec(dllexport) ParameterDescription : public DifferenceNamesOwner
 {
 public:
-	ParameterDescription(String description)
+	ParameterDescription(String name, String description, BOOL isOptional)
 	{
+		this->AddName(new String(name));
 		this->parameterDescription = description;
+		this->isOptional = isOptional;
 	}
 
 	/**
 	 * 获取参数描述，支持 command /?命令，提供参数的所有描述信息
 	 */
 	String GetDescription() const { return this->parameterDescription; }
+
+	/**
+	 * 获取一个标志说明当前参数是否可选
+	 */
+	BOOL IsOptional() const
+	{
+		return this->isOptional;
+	}
 private:
 	String parameterDescription;
+	BOOL   isOptional;
 };
+
+using ParameterDescriptionList = std::vector<ParameterDescription*>;
 
 /**
  * 命令元数据，提供命令名称形式，说明，以及参数说明等信息
@@ -265,7 +303,7 @@ public:
     /**
      * 获取当前命令支持的参数集合
      */
-	std::vector<ParameterDescription*> GetParameterDescriptions() const
+	ParameterDescriptionList GetParameterDescriptions() const
 	{
 		return this->parameters;
 	};
@@ -280,7 +318,7 @@ public:
 
 	~CommandMetadata();
 private:
-	std::vector<ParameterDescription*> parameters;
+	ParameterDescriptionList parameters;
 
 };
 
@@ -293,17 +331,18 @@ public:
 	virtual ~DebugCommand() = default;
 
 	/**
-	 * 执行命令的方法，特定的命令实现该方法完成调试命令功能
-	 */
-	virtual void RunCommand() = 0;
-
-	/**
 	 * 获取特定的命令描述符，描述名称名称，当前的参数以及注释等等。
 	 */
 	CommandMetadata* GetCommandMetadata() const
 	{
 		return this->pMetadata;
 	}
+
+
+	/**
+	* 执行命令的方法，特定的命令实现该方法完成调试命令功能
+	*/
+	void RunCommand(RunningContext*);
 
 protected:
 
@@ -315,9 +354,12 @@ protected:
 		this->pMetadata = pMetadata;
 	}
 
+	virtual void RunCommandCore(RunningContext*) = 0;
 private:
 	CommandMetadata * pMetadata = nullptr;
 };
+
+using DebugCommandList = std::vector<DebugCommand*>;
 
 /**
  * \brief 定义命令服务，插件可以使用该服务注册新的支持命令
@@ -361,7 +403,7 @@ public :
 	/**
 	 * 根据一个字符串集合查找命令，只要满足其中任何一个名称，即返回当前找到的命令对象指针
 	 */
-	DebugCommand* FindCommand(std::vector<String> names);
+	DebugCommand* FindCommand(std::vector<std::string const*> names);
 
 	
 
@@ -373,7 +415,7 @@ public :
 	/**
 	 * 返回当前命令服务的所有支持命令，所有的命令对象不允许修改
 	 */
-	std::vector<DebugCommand*> GetCommands() const
+	DebugCommandList GetCommands() const
 	{
 		return this->commands;
 	}
@@ -404,5 +446,5 @@ private:
 	static CommandService*   instance;
 	DebuggerService*         pDebuggerService;
 	DebuggerProcess*         pDebuggerProcess;
-	std::vector<DebugCommand*> commands;
+	DebugCommandList         commands;
 };

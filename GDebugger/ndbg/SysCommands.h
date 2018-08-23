@@ -15,5 +15,7 @@ public:
 	DebugProcessCommand();
 	~DebugProcessCommand();
 
-	void RunCommand() override;
+	void RunCommandCore(RunningContext*) override;
+
+	
 };

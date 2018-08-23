@@ -16,7 +16,7 @@ BOOL DifferenceNamesOwner::IsCommandNameMatch(const std::string& name) const
 	while (nameIterator != this->names.end())
 	{
 		const auto currentName = *nameIterator++;
-		if (currentName == name)
+		if (*currentName == name)
 		{
 			return TRUE;
 		}

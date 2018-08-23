@@ -24,8 +24,10 @@
   <ItemGroup>
     <ClCompile Include="CommandMetadata.cpp" />
     <ClCompile Include="CommandService.cpp" />
+    <ClCompile Include="DebugCommand.cpp" />
     <ClCompile Include="DifferenceNamesOwner.cpp" />
     <ClCompile Include="ErrorInfo.cpp" />
+    <ClCompile Include="ParsedCommand.cpp" />
     <ClCompile Include="ParsedParameter.cpp" />
   </ItemGroup>
   <ItemGroup>
